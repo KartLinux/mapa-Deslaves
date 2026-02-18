@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import type { MapController } from "../map/initMap";
-  import { initMap } from "../map/initMap";
+  import type { MapController } from "../../../modules/map/initMap";
+  import { initMap } from "../../../modules/map/initMap";
 
   let controller: MapController | null = null;
 

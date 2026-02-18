@@ -1,5 +1,5 @@
 // src/tests/tileSmokeTest.ts
-import { TILE_URLS } from "../map/mapConfig";
+import { TILE_URLS } from "../modules/map/mapConfig";
 
 type TestResult = {
   name: string;

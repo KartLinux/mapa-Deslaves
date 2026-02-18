@@ -1,17 +1,28 @@
 //Comandos (LINUX) para entender el proyecto Mapa deslaves
 echo "## node"; node -v
 echo "## npm"; npm -v
-echo "## package"; cat package.json
+
+echo "## package.json"; cat package.json
 echo "## deps"; npm list --depth=0
-echo "## tree src"; find src -maxdepth 4 -type f | sort
+
+echo "## vite config"; cat vite.config.ts 2>/dev/null || echo "NO vite.config.ts"
+
+echo "## tree src"; find src -maxdepth 6 -type f | sort
+
 echo "## tsconfig"; cat tsconfig.json
 echo "## index"; cat index.html
-echo "## main.ts"; sed -n '1,200p' src/main.ts
-echo "## initMap.ts"; sed -n '1,320p' src/map/initMap.ts
-echo "## layers.ts"; sed -n '1,320p' src/map/layers.ts
-echo "## mapConfig.ts"; sed -n '1,320p' src/map/mapConfig.ts
-echo "## legend.ts"; sed -n '1,320p' src/map/legend.ts
-echo "## theme.ts"; sed -n '1,320p' src/map/theme.ts
-echo "## env example"; cat .env.example
-echo "## package.json"; cat package.json
-echo "## vite config"; ls -la vite.config.* 2>/dev/null || true
+
+echo "## main.ts"; sed -n '1,220p' src/main.ts
+
+echo "## App.svelte"; sed -n '1,260p' src/interface/pages/start/App.svelte 2>/dev/null || echo "NO src/interface/pages/start/App.svelte"
+echo "## Map.svelte"; sed -n '1,320p' src/interface/pages/ui-mapa/Map.svelte 2>/dev/null || echo "NO src/interface/pages/ui-mapa/Map.svelte"
+
+echo "## initMap.ts"; sed -n '1,360p' src/modules/map/initMap.ts 2>/dev/null || echo "NO src/modules/map/initMap.ts"
+echo "## layers.ts"; sed -n '1,360p' src/modules/map/layers.ts 2>/dev/null || echo "NO src/modules/map/layers.ts"
+echo "## mapConfig.ts"; sed -n '1,360p' src/modules/map/mapConfig.ts 2>/dev/null || echo "NO src/modules/map/mapConfig.ts"
+echo "## legend.ts"; sed -n '1,360p' src/modules/map/legend.ts 2>/dev/null || echo "NO src/modules/map/legend.ts"
+echo "## theme.ts"; sed -n '1,360p' src/modules/map/theme.ts 2>/dev/null || echo "NO src/modules/map/theme.ts"
+
+echo "## tileSmokeTest.ts"; sed -n '1,260p' src/test/tileSmokeTest.ts 2>/dev/null || echo "NO src/test/tileSmokeTest.ts"
+
+echo "## env example"; cat .env.example 2>/dev/null || echo "NO .env.example"
