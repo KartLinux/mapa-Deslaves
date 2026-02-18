@@ -1,0 +1,17 @@
+//Comandos (LINUX) para entender el proyecto Mapa deslaves
+echo "## node"; node -v
+echo "## npm"; npm -v
+echo "## package"; cat package.json
+echo "## deps"; npm list --depth=0
+echo "## tree src"; find src -maxdepth 4 -type f | sort
+echo "## tsconfig"; cat tsconfig.json
+echo "## index"; cat index.html
+echo "## main.ts"; sed -n '1,200p' src/main.ts
+echo "## initMap.ts"; sed -n '1,320p' src/map/initMap.ts
+echo "## layers.ts"; sed -n '1,320p' src/map/layers.ts
+echo "## mapConfig.ts"; sed -n '1,320p' src/map/mapConfig.ts
+echo "## legend.ts"; sed -n '1,320p' src/map/legend.ts
+echo "## theme.ts"; sed -n '1,320p' src/map/theme.ts
+echo "## env example"; cat .env.example
+echo "## package.json"; cat package.json
+echo "## vite config"; ls -la vite.config.* 2>/dev/null || true
