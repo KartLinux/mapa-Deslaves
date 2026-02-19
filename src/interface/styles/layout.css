@@ -1,0 +1,44 @@
+/* src/interface/styles/layout.css */
+
+/* Contenedor general centrado */
+.contenedor {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/*
+  Layout base recomendado:
+  - Página ocupa todo el alto
+  - Header / Footer “natural”
+  - Contenido central ocupa el resto
+*/
+.pagina {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido {
+  flex: 1;
+  min-height: 0; /* importante para hijos con overflow (mapa, paneles) */
+}
+
+/* Fondo decorativo opcional para zonas (ej. header con background) */
+.fondo-ondas {
+  background: linear-gradient(
+    60deg,
+    var(--color--waves-start) 0%,
+    var(--color--waves-end) 100%
+  );
+}
+
+/* Separación vertical estándar */
+.seccion {
+  padding: 24px 0;
+}
+
+@media (max-width: 700px) {
+  .seccion {
+    padding: 18px 0;
+  }
+}

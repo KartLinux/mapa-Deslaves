@@ -1,0 +1,73 @@
+/* src/interface/styles/base.css */
+
+/* Reset suave + base global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  /* Permite que formularios/scroll se vean bien con el tema */
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: var(--color--background);
+  color: var(--color--text);
+
+  font-family: var(--tipografia--familia);
+  font-size: var(--tipografia--tamano-base);
+  line-height: var(--tipografia--linea-base);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  height: 100%;
+}
+
+/* Elementos básicos */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Accesibilidad: foco visible */
+:focus-visible {
+  outline: 2px solid var(--color--primary);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* Animaciones: respeta preferencias del usuario */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

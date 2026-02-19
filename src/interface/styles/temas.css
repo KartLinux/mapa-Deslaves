@@ -1,0 +1,60 @@
+/* src/interface/styles/temas.css */
+
+/*
+  Sistema de temas (SIN auto):
+  - <html data-theme="light|dark">
+  - Por defecto (si no hay atributo) se asume CLARO.
+*/
+
+/* =========================
+   TEMA CLARO (por defecto)
+   ========================= */
+:root,
+:root[data-theme="light"] {
+  --color--background: #f6f7fb;
+  --color--surface: #ffffff;
+  --color--surface-2: #f0f2f8;
+
+  --color--border: rgba(15, 23, 42, 0.12);
+
+  --color--text: #0f172a;
+  --color--text-muted: rgba(15, 23, 42, 0.70);
+
+  --color--primary: #2564eb;
+  --color--primary-contrast: #ffffff;
+
+  --color--primary-rgb: 37, 99, 235;
+  --color--text-rgb: 15, 23, 42;
+
+  --sombra--suave: 0 10px 24px rgba(2, 6, 23, 0.08);
+  --sombra--media: 0 16px 40px rgba(2, 6, 23, 0.12);
+
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.18);
+  --color--waves-end: rgba(var(--color--primary-rgb), 0.04);
+}
+
+/* =========================
+   TEMA OSCURO
+   ========================= */
+:root[data-theme="dark"] {
+  --color--background: #0b1220;
+  --color--surface: #101a2b;
+  --color--surface-2: #0e1726;
+
+  --color--border: rgba(233, 238, 246, 0.12);
+
+  --color--text: #e9eef6;
+  --color--text-muted: rgba(233, 238, 246, 0.72);
+
+  --color--primary: #6aa9ff;
+  --color--primary-contrast: #08101f;
+
+  --color--primary-rgb: 106, 169, 255;
+  --color--text-rgb: 233, 238, 246;
+
+  --sombra--suave: 0 10px 24px rgba(0, 0, 0, 0.25);
+  --sombra--media: 0 16px 40px rgba(0, 0, 0, 0.35);
+
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.22);
+  --color--waves-end: rgba(0, 0, 0, 0.02);
+}

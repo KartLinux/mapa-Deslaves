@@ -1,0 +1,33 @@
+/* src/interface/styles/tipografia.css */
+
+:root {
+  --tipografia--familia: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  --tipografia--tamano-base: 16px;
+  --tipografia--linea-base: 1.55;
+
+  --tipografia--peso-normal: 400;
+  --tipografia--peso-medio: 600;
+  --tipografia--peso-fuerte: 800;
+
+  --tipografia--h1: 2rem;
+  --tipografia--h2: 1.5rem;
+  --tipografia--h3: 1.25rem;
+  --tipografia--texto-pequeno: 0.92rem;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 0.6rem 0;
+  line-height: 1.2;
+  font-weight: var(--tipografia--peso-fuerte);
+  color: var(--color--text);
+}
+
+p {
+  margin: 0 0 1rem 0;
+  color: var(--color--text);
+}
+
+small {
+  font-size: var(--tipografia--texto-pequeno);
+  color: var(--color--text-muted);
+}

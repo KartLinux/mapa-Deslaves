@@ -1,11 +1,9 @@
-/* Para que Leaflet pueda ocupar toda la pantalla */
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
+/* src/interface/styles/main.css */
 
-#map {
-  height: 100vh;
-  width: 100%;
-}
+/*tokens/temas primero*/
+@import "./temas.css";
+@import "./tipografia.css";
+@import "./base.css";
+@import "./layout.css";
+
+/*“puentes” para librerías externas */

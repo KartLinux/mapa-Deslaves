@@ -2,12 +2,11 @@
 import L from "leaflet";
 import { buildBaseLayers, buildOverlays } from "./layers";
 import { LABELS, MAP_DEFAULTS, type ThemeMode, LEGEND_BY_OVERLAY_NAME } from "./mapConfig";
-import { readThemeFromHtml, resolveTheme, setThemeOnHtml, watchThemeChanges } from "./theme";
+import { readThemeFromHtml, resolveTheme, watchThemeChanges } from "./theme";
 import { createLegendControl, bindLegendToLayerControl } from "./legend";
 
 export type MapController = {
   getMap: () => L.Map;
-  setTheme: (mode: ThemeMode) => void;
   destroy: () => void;
 };
 
@@ -17,21 +16,32 @@ type InitOptions = Partial<{
   followTheme: boolean; // si true: se actualiza al cambiar data-theme o tema sistema
 }>;
 
-export async function initMap(containerId: string, options: InitOptions = {}): Promise<MapController> {
+export async function initMap(
+  containerId: string,
+  options: InitOptions = {}
+): Promise<MapController> {
+  // --------------------
+  // 1) Inicialización del mapa
+  // --------------------
   const map = L.map(containerId, {
     center: options.center ?? MAP_DEFAULTS.center,
     zoom: options.zoom ?? MAP_DEFAULTS.zoom,
   });
 
+  // --------------------
+  // 2) Capas (base + overlays)
+  // --------------------
   const baseLayers = buildBaseLayers();
   const overlays = await buildOverlays();
-  //====================================================================
-  // Debug de errores de tiles (solo desarrollo)
-  const enableTileDebug = true;
-  if (enableTileDebug) {
+
+  // --------------------
+  // 3) Debug tiles (solo desarrollo)
+  // --------------------
+  const ENABLE_TILE_DEBUG = true;
+
+  if (ENABLE_TILE_DEBUG) {
     const attachTileError = (layers: Record<string, L.Layer>, groupName: string) => {
       Object.entries(layers).forEach(([name, layer]) => {
-        // Solo TileLayer y WMS emiten tileerror
         if ("on" in layer) {
           (layer as L.TileLayer).on("tileerror", (e: any) => {
             const src = e?.tile?.src;
@@ -41,15 +51,17 @@ export async function initMap(containerId: string, options: InitOptions = {}): P
         }
       });
     };
+
     attachTileError(baseLayers, "Base");
     attachTileError(overlays, "Overlay");
   }
-  //====================================================================
-  // Control de capas
-  const layersControl = L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
-  // Botón toggle para mostrar/ocultar capas en móvil
-  const layersToggle = L.control({ position: "topright" });
 
+  // --------------------
+  // 4) Control de capas + botón móvil "Capas"
+  // --------------------
+  const layersControl = L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+
+  const layersToggle = L.control({ position: "topright" });
   layersToggle.onAdd = () => {
     const btn = L.DomUtil.create("button", "map-btn");
     btn.type = "button";
@@ -64,13 +76,15 @@ export async function initMap(containerId: string, options: InitOptions = {}): P
 
     return btn;
   };
-
   layersToggle.addTo(map);
 
-  // Escala
-  const scale = L.control.scale({ imperial: false }).addTo(map);
   // --------------------
-  // Leyenda (solo capas que tienen leyenda definida)
+  // 5) Escala
+  // --------------------
+  const scale = L.control.scale({ imperial: false }).addTo(map);
+
+  // --------------------
+  // 6) Leyenda (solo overlays con leyenda definida)
   // --------------------
   const legend = createLegendControl("bottomright");
   legend.control.addTo(map);
@@ -82,7 +96,9 @@ export async function initMap(containerId: string, options: InitOptions = {}): P
     setActive: (items) => legend.setActive(items),
   });
 
-  // Helper: aplica la capa base según modo resuelto
+  // --------------------
+  // 7) Tema
+  // --------------------
   const applyBase = (mode: ThemeMode) => {
     const resolved = resolveTheme(mode);
 
@@ -96,72 +112,32 @@ export async function initMap(containerId: string, options: InitOptions = {}): P
     if (map.hasLayer(unwanted)) map.removeLayer(unwanted);
   };
 
-  // Tema inicial (desde html)
+  // Base inicial (según data-theme / sistema)
   applyBase(readThemeFromHtml());
 
-  // Opcional: seguir cambios del tema
+  // Seguir cambios del tema (atributo data-theme o tema del sistema)
   const followTheme = options.followTheme ?? true;
   const cleanupTheme = followTheme ? watchThemeChanges(applyBase) : undefined;
 
-  const setTheme = (mode: ThemeMode) => {
-    // Control externo: cambias el atributo y el watcher hará lo demás (si followTheme=true)
-    setThemeOnHtml(mode);
-    if (!followTheme) applyBase(mode); // si no hay watcher, aplica directo
-  };
-
+  // --------------------
+  // 8) Destroy / Cleanup
+  // --------------------
   const destroy = () => {
     cleanupTheme?.();
     cleanupLegend?.();
 
-    // remover controles
     map.removeControl(layersControl);
     map.removeControl(scale);
     map.removeControl(legend.control);
 
-    // remover layers (por limpieza)
     Object.values(baseLayers).forEach((l) => map.hasLayer(l) && map.removeLayer(l));
     Object.values(overlays).forEach((l) => map.hasLayer(l) && map.removeLayer(l));
 
     map.remove();
   };
-  // Botón de cambio de tema
-  const themeToggle =L.control({ position: "topright" });
-
-  themeToggle.onAdd = () => {
-    const btn = L.DomUtil.create("button", "map-btn");
-    btn.type = "button";
-
-    const get = () =>
-      (document.documentElement.getAttribute("data-theme") as ThemeMode) ?? "auto";
-
-    const next = (m: ThemeMode): ThemeMode =>
-      m === "auto" ? "light" : m === "light" ? "dark" : "auto";
-
-    const label = (m: ThemeMode) =>
-      m === "light" ? "☀️" : m === "dark" ? "🌙" : "🖥️";
-
-    const sync = () => {
-      const m = get();
-      btn.textContent = `Tema ${label(m)}`;
-    };
-
-    L.DomEvent.disableClickPropagation(btn);
-
-    L.DomEvent.on(btn, "click", () => {
-      const n = next(get());
-      setTheme(n);
-      sync();
-    });
-
-    sync();
-    return btn;
-  };
-
-  themeToggle.addTo(map);
 
   return {
     getMap: () => map,
-    setTheme,
     destroy,
   };
 }
