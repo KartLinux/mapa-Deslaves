@@ -4,6 +4,7 @@
   import EnlaceNavegacion from "../molecule/EnlaceNavegacion.svelte";
   import CambiadorTema from "../molecule/CambiadorTema.svelte";
   import { navegar as irA } from "../../router/enrutador";
+  import EfectoDeslizamiento from "../molecule/EfectoDeslizamiento.svelte";
 
   export let mostrarFondo = false;
 
@@ -126,6 +127,7 @@
       <CambiadorTema />
     </div>
   </div>
+    <EfectoDeslizamiento alto={28} piezas={100} />
 </header>
 
 <style>
@@ -137,7 +139,7 @@
 
   header {
     position: relative;
-    padding: 22px 0;
+    padding: 28px 0;
     background: transparent;
   }
 
