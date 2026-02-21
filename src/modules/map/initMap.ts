@@ -26,6 +26,7 @@ export async function initMap(
   const map = L.map(containerId, {
     center: options.center ?? MAP_DEFAULTS.center,
     zoom: options.zoom ?? MAP_DEFAULTS.zoom,
+    zoomControl: false,
   });
 
   // --------------------
@@ -57,26 +58,39 @@ export async function initMap(
   }
 
   // --------------------
-  // 4) Control de capas + botón móvil "Capas"
+  // 4) Control de capas + botón toggle "Capas"
   // --------------------
   const layersControl = L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
 
+  // Estado de visibilidad del panel capas + leyenda
+  let capasVisible = true;
+
   const layersToggle = L.control({ position: "topright" });
   layersToggle.onAdd = () => {
-    const btn = L.DomUtil.create("button", "map-btn");
+    const btn = L.DomUtil.create("button", "map-btn layers-toggle-btn") as HTMLButtonElement;
     btn.type = "button";
-    btn.textContent = "Capas";
+    btn.textContent = "🗂️ Capas";
 
     L.DomEvent.disableClickPropagation(btn);
     L.DomEvent.on(btn, "click", () => {
-      const el = (layersControl as any)._container as HTMLElement | undefined;
-      if (!el) return;
-      el.classList.toggle("is-open");
+      capasVisible = !capasVisible;
+
+      const layersEl = (layersControl as any)._container as HTMLElement | undefined;
+      if (layersEl) layersEl.style.display = capasVisible ? "" : "none";
+
+      // La leyenda se referencia después del mount; usamos un pequeño helper
+      applyLegendVisibility(capasVisible);
+
+      btn.textContent = capasVisible ? "🗂️ Capas" : "🗂️ Capas ✕";
+      btn.classList.toggle("capas-ocultas", !capasVisible);
     });
 
     return btn;
   };
   layersToggle.addTo(map);
+
+  // Helper que se sobrescribe una vez que la leyenda exista
+  let applyLegendVisibility: (visible: boolean) => void = () => {};
 
   // --------------------
   // 5) Escala
@@ -88,6 +102,12 @@ export async function initMap(
   // --------------------
   const legend = createLegendControl("bottomright");
   legend.control.addTo(map);
+
+  // Conectar helper de visibilidad ahora que la leyenda existe
+  applyLegendVisibility = (visible: boolean) => {
+    const legendEl = (legend.control as any)._container as HTMLElement | undefined;
+    if (legendEl) legendEl.style.display = visible ? "" : "none";
+  };
 
   const cleanupLegend = bindLegendToLayerControl({
     map,
@@ -127,6 +147,7 @@ export async function initMap(
     cleanupLegend?.();
 
     map.removeControl(layersControl);
+    map.removeControl(layersToggle);
     map.removeControl(scale);
     map.removeControl(legend.control);
 
