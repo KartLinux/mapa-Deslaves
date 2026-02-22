@@ -2,27 +2,20 @@
 echo "## node"; node -v
 echo "## npm"; npm -v
 
-echo "## package.json"; cat package.json
-echo "## deps"; npm list --depth=0
+echo "## project files"; ls -la
 
-echo "## vite config"; cat vite.config.ts 2>/dev/null || echo "NO vite.config.ts"
+echo "## package.json (keys only)"; node -e "const p=require('./package.json'); console.log({name:p.name, version:p.version, type:p.type, scripts:Object.keys(p.scripts||{}), dependencies:Object.keys(p.dependencies||{}), devDependencies:Object.keys(p.devDependencies||{})})"
 
-echo "## tree src"; find src -maxdepth 6 -type f | sort
+echo "## deps (top-level)"; npm list --depth=0 --silent
 
-echo "## tsconfig"; cat tsconfig.json
-echo "## index"; cat index.html
+echo "## vite config"; ls -la vite.config.* 2>/dev/null || echo "NO vite.config.*"
 
-echo "## main.ts"; sed -n '1,220p' src/main.ts
+echo "## tsconfig files"; ls -la tsconfig*.json 2>/dev/null || echo "NO tsconfig*.json"
 
-echo "## App.svelte"; sed -n '1,260p' src/interface/pages/start/App.svelte 2>/dev/null || echo "NO src/interface/pages/start/App.svelte"
-echo "## Map.svelte"; sed -n '1,320p' src/interface/pages/ui-mapa/Map.svelte 2>/dev/null || echo "NO src/interface/pages/ui-mapa/Map.svelte"
+echo "## env templates"; ls -la .env* 2>/dev/null || echo "NO .env*"
 
-echo "## initMap.ts"; sed -n '1,360p' src/modules/map/initMap.ts 2>/dev/null || echo "NO src/modules/map/initMap.ts"
-echo "## layers.ts"; sed -n '1,360p' src/modules/map/layers.ts 2>/dev/null || echo "NO src/modules/map/layers.ts"
-echo "## mapConfig.ts"; sed -n '1,360p' src/modules/map/mapConfig.ts 2>/dev/null || echo "NO src/modules/map/mapConfig.ts"
-echo "## legend.ts"; sed -n '1,360p' src/modules/map/legend.ts 2>/dev/null || echo "NO src/modules/map/legend.ts"
-echo "## theme.ts"; sed -n '1,360p' src/modules/map/theme.ts 2>/dev/null || echo "NO src/modules/map/theme.ts"
+echo "## tree src (names only)"; find src -maxdepth 6 -type f | sort
 
-echo "## tileSmokeTest.ts"; sed -n '1,260p' src/test/tileSmokeTest.ts 2>/dev/null || echo "NO src/test/tileSmokeTest.ts"
-
-echo "## env example"; cat .env.example 2>/dev/null || echo "NO .env.example"
+echo "## entrypoints present"; \
+ls -la index.html 2>/dev/null || echo "NO index.html"; \
+ls -la src/main.* 2>/dev/null || echo "NO src/main.*"
