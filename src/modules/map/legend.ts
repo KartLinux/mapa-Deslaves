@@ -51,7 +51,7 @@ export function createLegendControl(position: L.ControlPosition = "bottomright")
     active: [],
   };
 
-  const control = L.control({ position });
+  const control = new L.Control({ position });
 
   control.onAdd = () => {
     state.container.className = "leaflet-control map-legend";

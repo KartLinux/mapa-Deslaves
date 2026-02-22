@@ -65,7 +65,7 @@ export async function initMap(
   // Estado de visibilidad del panel capas + leyenda
   let capasVisible = true;
 
-  const layersToggle = L.control({ position: "topright" });
+  const layersToggle = L.control.layers(undefined, undefined, { position: "topright" });
   layersToggle.onAdd = () => {
     const btn = L.DomUtil.create("button", "map-btn layers-toggle-btn") as HTMLButtonElement;
     btn.type = "button";
