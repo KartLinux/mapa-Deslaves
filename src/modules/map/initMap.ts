@@ -65,7 +65,7 @@ export async function initMap(
   // Estado de visibilidad del panel capas + leyenda
   let capasVisible = true;
 
-  const layersToggle = L.control({ position: "topright" });
+  const layersToggle = L.control.layers(undefined, undefined, { position: "topright" });
   layersToggle.onAdd = () => {
     const btn = L.DomUtil.create("button", "map-btn layers-toggle-btn") as HTMLButtonElement;
     btn.type = "button";
@@ -76,7 +76,11 @@ export async function initMap(
       capasVisible = !capasVisible;
 
       const layersEl = (layersControl as any)._container as HTMLElement | undefined;
-      if (layersEl) layersEl.style.display = capasVisible ? "" : "none";
+      if (layersEl) {
+        layersEl.classList.toggle("is-open", capasVisible);
+        // opcional: limpiar display inline para que mande el CSS
+        layersEl.style.removeProperty("display");
+      }
 
       // La leyenda se referencia después del mount; usamos un pequeño helper
       applyLegendVisibility(capasVisible);
@@ -90,7 +94,7 @@ export async function initMap(
   layersToggle.addTo(map);
 
   // Helper que se sobrescribe una vez que la leyenda exista
-  let applyLegendVisibility: (visible: boolean) => void = () => {};
+  let applyLegendVisibility: (visible: boolean) => void = () => { };
 
   // --------------------
   // 5) Escala
