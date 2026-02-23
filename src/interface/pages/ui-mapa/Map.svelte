@@ -74,7 +74,7 @@
         opacity: 1,
         fillOpacity: 0.85,
       });
-      marker.bindPopup(buildPopup(e), { maxWidth: 320 });
+      marker.bindPopup(buildPopup(e), { maxWidth: 360 });
       markersLayer.addLayer(marker);
     }
   }
@@ -104,10 +104,15 @@
       )
       .join("");
 
-    const desc =
-      e.descripcion.length > 200
-        ? e.descripcion.slice(0, 200) + "…"
-        : e.descripcion;
+    const LIMIT = 220;
+    const descBlock = e.descripcion
+      ? e.descripcion.length > LIMIT
+        ? `<details style="margin:8px 0 0">
+             <summary style="cursor:pointer;font-size:12px;font-weight:600;color:#2564eb;list-style:none;outline:none;padding:2px 0;user-select:none">Ver descripción completa ▼</summary>
+             <p style="margin:4px 0 0;opacity:.8;font-size:12px;line-height:1.5;white-space:pre-line;border-top:1px solid #e2e8f0;padding-top:6px">${e.descripcion}</p>
+           </details>`
+        : `<p style="margin:8px 0 0;opacity:.75;font-size:12px;line-height:1.5;white-space:pre-line">${e.descripcion}</p>`
+      : "";
 
     return `
       <div style="font-family:system-ui,sans-serif;font-size:13px">
@@ -115,7 +120,7 @@
           Evento #${e.id} — ${e.tipoEvento}
         </div>
         <table style="border-collapse:collapse;width:100%">${rows}</table>
-        ${desc ? `<p style="margin:8px 0 0;opacity:.75;font-size:12px;line-height:1.4">${desc}</p>` : ""}
+        ${descBlock}
       </div>`;
   }
 
