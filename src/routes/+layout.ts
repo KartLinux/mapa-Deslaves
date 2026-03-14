@@ -1,4 +1,5 @@
-// SSR disabled: the app relies on browser APIs (Leaflet, localStorage) and
-// serves a fully static site via adapter-static with client-side rendering.
+// Pure client-side SPA: Leaflet and localStorage require browser APIs.
+// With adapter-static, prerender=false + fallback:'index.html' produces a
+// single-page application where all routing is handled client-side.
 export const prerender = false;
 export const ssr = false;

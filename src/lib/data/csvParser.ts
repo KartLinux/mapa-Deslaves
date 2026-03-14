@@ -126,15 +126,13 @@ export function sumField<T>(arr: T[], field: keyof T): number {
   return arr.reduce((s, item) => s + (Number(item[field]) || 0), 0);
 }
 
-export function color_nivel(nivel: string): string {
-  switch (nivel.trim()) {
-    case 'Nivel 1': return '#f59e0b';
-    case 'Nivel 2': return '#f97316';
-    case 'Nivel 3': return '#ef4444';
-    case 'Nivel 4': return '#7f1d1d';
-    default:        return '#94a3b8';
-  }
+/** Returns the CSS color for a given event level. Use `NIVEL_COLORS` for direct lookup. */
+export function colorNivel(nivel: string): string {
+  return NIVEL_COLORS[nivel.trim()] ?? NIVEL_COLORS['Sin nivel'];
 }
+
+/** @deprecated Use colorNivel instead */
+export const color_nivel = colorNivel;
 
 export const NIVEL_COLORS: Record<string, string> = {
   'Nivel 1': '#f59e0b',

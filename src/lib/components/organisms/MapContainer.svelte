@@ -3,7 +3,7 @@
   import { browser } from '$app/environment';
   import { goto } from '$app/navigation';
   import type { Evento } from '$lib/data/types';
-  import { color_nivel } from '$lib/data/csvParser';
+  import { colorNivel } from '$lib/data/csvParser';
   import { MAP_DEFAULTS, TILE_URLS, LABELS, ATTRIBUTION, OVERLAY_CONFIG } from '$lib/utils/mapHelpers';
 
   export let eventos: Evento[] = [];
@@ -29,7 +29,7 @@
       if (!ev.lat || !ev.lng) continue;
       const marker = lCircleMarker([ev.lat, ev.lng], {
         radius: 7,
-        fillColor: color_nivel(ev.nivelEvento),
+        fillColor: colorNivel(ev.nivelEvento),
         color: '#fff',
         weight: 1,
         opacity: 1,
@@ -40,7 +40,7 @@
           <strong>${ev.tipoEvento}</strong><br/>
           📍 ${ev.provincia}, ${ev.canton}<br/>
           📅 ${ev.fechaEvento}<br/>
-          <span style="color:${color_nivel(ev.nivelEvento)};font-weight:700">${ev.nivelEvento || 'Sin nivel'}</span><br/>
+          <span style="color:${colorNivel(ev.nivelEvento)};font-weight:700">${ev.nivelEvento || 'Sin nivel'}</span><br/>
           <a href="/eventos/${ev.id}" style="color:#2564eb">Ver detalle →</a>
         </div>
       `);

@@ -16,7 +16,7 @@ export const LABELS = {
   overlays: {
     topo: 'Relieve (Montañas)',
     rios: 'Flujos de Agua',
-    geologia: 'Relieve(IGM Ecuador)',
+    geologia: 'Relieve (IGM Ecuador)',
     lluvia: 'Lluvia en Tiempo Real',
     aguaSuperficial: 'Agua Superficial (JRC)',
     soilSand: 'Textura Suelo: Arena (SoilGrids)',
