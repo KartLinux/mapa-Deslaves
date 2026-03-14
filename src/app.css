@@ -1,0 +1,167 @@
+/* ============================================================
+   TEMAS (CSS Custom Properties)
+   ============================================================ */
+:root, :root[data-theme="light"] {
+  --color--background: #f6f7fb;
+  --color--surface: #ffffff;
+  --color--surface-2: #f0f2f8;
+  --color--border: rgba(15, 23, 42, 0.12);
+  --color--text: #0f172a;
+  --color--text-muted: rgba(15, 23, 42, 0.70);
+  --color--primary: #2564eb;
+  --color--primary-contrast: #ffffff;
+  --color--primary-rgb: 37, 99, 235;
+  --color--text-rgb: 15, 23, 42;
+  --sombra--suave: 0 10px 24px rgba(2, 6, 23, 0.08);
+  --sombra--media: 0 16px 40px rgba(2, 6, 23, 0.12);
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.18);
+  --color--waves-end: rgba(var(--color--primary-rgb), 0.04);
+  --tipografia--h1: 2rem;
+  --tipografia--h2: 1.5rem;
+  --tipografia--h3: 1.25rem;
+  --tipografia--peso-normal: 400;
+  --tipografia--peso-medio: 600;
+  --tipografia--peso-fuerte: 800;
+}
+
+:root[data-theme="dark"] {
+  --color--background: #0b1220;
+  --color--surface: #101a2b;
+  --color--surface-2: #0e1726;
+  --color--border: rgba(233, 238, 246, 0.12);
+  --color--text: #e9eef6;
+  --color--text-muted: rgba(233, 238, 246, 0.72);
+  --color--primary: #6aa9ff;
+  --color--primary-contrast: #08101f;
+  --color--primary-rgb: 106, 169, 255;
+  --color--text-rgb: 233, 238, 246;
+  --sombra--suave: 0 10px 24px rgba(0, 0, 0, 0.25);
+  --sombra--media: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.22);
+  --color--waves-end: rgba(0, 0, 0, 0.02);
+}
+
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color--background);
+  color: var(--color--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   TIPOGRAFÍA
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color--text);
+  font-weight: var(--tipografia--peso-fuerte);
+  line-height: 1.2;
+}
+
+h1 { font-size: var(--tipografia--h1); }
+h2 { font-size: var(--tipografia--h2); }
+h3 { font-size: var(--tipografia--h3); }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--color--primary); }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido {
+  flex: 1;
+}
+
+.seccion {
+  padding: 24px;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.page-container {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.section-title {
+  font-size: var(--tipografia--h2);
+  font-weight: var(--tipografia--peso-fuerte);
+  color: var(--color--text);
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: var(--color--surface);
+  border: 1px solid var(--color--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--sombra--suave);
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ============================================================
+   MAP LEGEND
+   ============================================================ */
+.map-legend {
+  background: var(--color--surface);
+  border: 1px solid var(--color--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  box-shadow: var(--sombra--suave);
+}
+
+.map-legend-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--color--text);
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.map-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
