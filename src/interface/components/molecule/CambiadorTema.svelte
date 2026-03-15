@@ -1,20 +1,11 @@
-<!-- src/interface/componentes/moleculas/CambiadorTema.svelte -->
 <script lang="ts">
-  /*
-    Cambiador de tema (SIN auto):
-    - Alterna entre light <-> dark
-    - Guarda preferencia en localStorage
-    - Aplica el tema al cargar para que NO cambie al navegar
-  */
-
   type ThemeMode = "light" | "dark";
 
   const ATTR = "data-theme";
   const STORAGE_KEY = "tema";
 
   function getFromDom(): ThemeMode {
-    const raw = document.documentElement.getAttribute(ATTR);
-    return raw === "dark" ? "dark" : "light";
+    return document.documentElement.getAttribute(ATTR) === "dark" ? "dark" : "light";
   }
 
   function setToDom(mode: ThemeMode) {
@@ -23,68 +14,111 @@
 
   function getFromStorage(): ThemeMode | null {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw === "dark" || raw === "light" ? raw : null;
+    return raw === "light" || raw === "dark" ? raw : null;
   }
 
   function saveToStorage(mode: ThemeMode) {
     localStorage.setItem(STORAGE_KEY, mode);
   }
 
-  function next(mode: ThemeMode): ThemeMode {
-    return mode === "light" ? "dark" : "light";
-  }
-
-  function icon(mode: ThemeMode) {
-    return mode === "light" ? "Claro" : "Oscuro";
-  }
-
-  // 1) Al cargar: usar localStorage si existe, si no, usar DOM, si no, light.
   let modo: ThemeMode = "light";
 
   if (typeof window !== "undefined") {
-    const guardado = getFromStorage();
-    modo = guardado ?? getFromDom();
-    setToDom(modo); // asegura consistencia desde el inicio
+    modo = getFromStorage() ?? getFromDom();
+    setToDom(modo);
   }
 
-  // 2) Alternar y persistir
+  $: etiqueta = modo === "light" ? "Modo claro" : "Modo oscuro";
+  $: accion = modo === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro";
+
   function toggle() {
-    modo = next(modo);
+    modo = modo === "light" ? "dark" : "light";
     setToDom(modo);
     saveToStorage(modo);
   }
 </script>
 
-<button class="tema" type="button" on:click={toggle} aria-label="Cambiar tema">
-  Tema {icon(modo)}
+<button class="tema" type="button" onclick={toggle} aria-label={accion} title={accion}>
+  <span class="tema-icono" aria-hidden="true">
+    {#if modo === "light"}
+      <svg viewBox="0 0 24 24" role="presentation">
+        <circle cx="12" cy="12" r="4.25"></circle>
+        <path
+          d="M12 2.75v2.5M12 18.75v2.5M21.25 12h-2.5M5.25 12h-2.5M18.54 5.46l-1.77 1.77M7.23 16.77l-1.77 1.77M18.54 18.54l-1.77-1.77M7.23 7.23 5.46 5.46"
+        ></path>
+      </svg>
+    {:else}
+      <svg viewBox="0 0 24 24" role="presentation">
+        <path
+          d="M20.4 14.1A8.5 8.5 0 0 1 9.9 3.6a8.75 8.75 0 1 0 10.5 10.5Z"
+        ></path>
+      </svg>
+    {/if}
+  </span>
+  <span>{etiqueta}</span>
 </button>
 
 <style>
-  /* Solo variables globales (sin colores quemados) */
   .tema {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-
-    height: 40px;
-    padding: 0 12px;
-    border-radius: var(--radio--m);
-
-    background: rgba(var(--color--primary-rgb), 0.10);
-    border: 1px solid rgba(var(--color--text-rgb), 0.12);
+    gap: 10px;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--color--border);
+    border-radius: 999px;
+    background: var(--gradient--glass);
     color: var(--color--text);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     cursor: pointer;
-
-    transition: all 0.2s ease;
-    font-weight: var(--tipografia--peso-medio);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
   }
 
   .tema:hover {
-    background: rgba(var(--color--primary-rgb), 0.16);
-    color: var(--color--primary);
+    border-color: rgba(var(--color--primary-rgb), 0.25);
+    box-shadow: var(--sombra--suave);
+    transform: translateY(-1px);
   }
 
-  .tema:active {
-    transform: scale(0.98);
+  .tema-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: rgba(var(--color--primary-rgb), 0.1);
+    color: var(--color--primary);
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  .tema-icono svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .tema-icono svg circle {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  @media (max-width: 640px) {
+    .tema span:last-child {
+      display: none;
+    }
+
+    .tema {
+      width: 44px;
+      padding: 0;
+      justify-content: center;
+    }
   }
 </style>

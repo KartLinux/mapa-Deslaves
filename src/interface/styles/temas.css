@@ -1,60 +1,88 @@
 /* src/interface/styles/temas.css */
 
-/*
-  Sistema de temas (SIN auto):
-  - <html data-theme="light|dark">
-  - Por defecto (si no hay atributo) se asume CLARO.
-*/
-
-/* =========================
-   TEMA CLARO (por defecto)
-   ========================= */
 :root,
 :root[data-theme="light"] {
-  --color--background: #f6f7fb;
-  --color--surface: #ffffff;
-  --color--surface-2: #f0f2f8;
+  --color--background: #eef3f8;
+  --color--surface: rgba(255, 255, 255, 0.9);
+  --color--surface-2: #dfe9f3;
+  --color--surface-3: #f7fbff;
 
-  --color--border: rgba(15, 23, 42, 0.12);
+  --color--border: rgba(15, 37, 63, 0.12);
+  --color--border-strong: rgba(15, 37, 63, 0.22);
 
-  --color--text: #0f172a;
-  --color--text-muted: rgba(15, 23, 42, 0.70);
+  --color--text: #0c1e31;
+  --color--text-muted: rgba(12, 30, 49, 0.7);
+  --color--text-soft: rgba(12, 30, 49, 0.52);
 
-  --color--primary: #2564eb;
-  --color--primary-contrast: #ffffff;
+  --color--primary: #0c6fbf;
+  --color--primary-contrast: #f8fcff;
+  --color--accent: #0f9f8f;
+  --color--danger: #d14343;
 
-  --color--primary-rgb: 37, 99, 235;
-  --color--text-rgb: 15, 23, 42;
+  --color--primary-rgb: 12, 111, 191;
+  --color--accent-rgb: 15, 159, 143;
+  --color--text-rgb: 12, 30, 49;
 
-  --sombra--suave: 0 10px 24px rgba(2, 6, 23, 0.08);
-  --sombra--media: 0 16px 40px rgba(2, 6, 23, 0.12);
+  --gradient--hero: linear-gradient(135deg, #0a2239 0%, #0d4f78 46%, #11998e 100%);
+  --gradient--page: radial-gradient(circle at top left, rgba(12, 111, 191, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(15, 159, 143, 0.1), transparent 24%);
+  --gradient--glass: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.7));
 
-  --color--waves-start: rgba(var(--color--primary-rgb), 0.18);
-  --color--waves-end: rgba(var(--color--primary-rgb), 0.04);
+  --sombra--suave: 0 12px 32px rgba(7, 20, 35, 0.08);
+  --sombra--media: 0 20px 52px rgba(7, 20, 35, 0.14);
+  --sombra--fuerte: 0 24px 72px rgba(7, 20, 35, 0.18);
+
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.2);
+  --color--waves-end: rgba(var(--color--accent-rgb), 0.04);
+
+  --radio--s: 10px;
+  --radio--m: 14px;
+  --radio--l: 22px;
+
+  --nivel-1: #22c55e;
+  --nivel-2: #f59e0b;
+  --nivel-3: #ef4444;
+  --nivel-nd: #94a3b8;
+  --color-institucional: #0b4f8a;
 }
 
-/* =========================
-   TEMA OSCURO
-   ========================= */
 :root[data-theme="dark"] {
-  --color--background: #0b1220;
-  --color--surface: #101a2b;
-  --color--surface-2: #0e1726;
+  --color--background: #07111b;
+  --color--surface: rgba(13, 24, 39, 0.86);
+  --color--surface-2: #0d1b2a;
+  --color--surface-3: #13263a;
 
-  --color--border: rgba(233, 238, 246, 0.12);
+  --color--border: rgba(215, 232, 247, 0.12);
+  --color--border-strong: rgba(215, 232, 247, 0.2);
 
-  --color--text: #e9eef6;
-  --color--text-muted: rgba(233, 238, 246, 0.72);
+  --color--text: #e5f0fb;
+  --color--text-muted: rgba(229, 240, 251, 0.74);
+  --color--text-soft: rgba(229, 240, 251, 0.54);
 
-  --color--primary: #6aa9ff;
-  --color--primary-contrast: #08101f;
+  --color--primary: #65b8ff;
+  --color--primary-contrast: #04101b;
+  --color--accent: #49d6c4;
+  --color--danger: #ff7e7e;
 
-  --color--primary-rgb: 106, 169, 255;
-  --color--text-rgb: 233, 238, 246;
+  --color--primary-rgb: 101, 184, 255;
+  --color--accent-rgb: 73, 214, 196;
+  --color--text-rgb: 229, 240, 251;
 
-  --sombra--suave: 0 10px 24px rgba(0, 0, 0, 0.25);
-  --sombra--media: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --gradient--hero: linear-gradient(135deg, #050d15 0%, #123052 48%, #0b7e73 100%);
+  --gradient--page: radial-gradient(circle at top left, rgba(101, 184, 255, 0.16), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(73, 214, 196, 0.12), transparent 24%);
+  --gradient--glass: linear-gradient(180deg, rgba(12, 24, 38, 0.84), rgba(8, 18, 29, 0.76));
 
-  --color--waves-start: rgba(var(--color--primary-rgb), 0.22);
-  --color--waves-end: rgba(0, 0, 0, 0.02);
+  --sombra--suave: 0 14px 34px rgba(0, 0, 0, 0.28);
+  --sombra--media: 0 24px 58px rgba(0, 0, 0, 0.38);
+  --sombra--fuerte: 0 26px 80px rgba(0, 0, 0, 0.48);
+
+  --color--waves-start: rgba(var(--color--primary-rgb), 0.24);
+  --color--waves-end: rgba(var(--color--accent-rgb), 0.06);
+
+  --nivel-1: #4ade80;
+  --nivel-2: #fbbf24;
+  --nivel-3: #f87171;
+  --nivel-nd: #64748b;
+  --color-institucional: #93c5fd;
 }

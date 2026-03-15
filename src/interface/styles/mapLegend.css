@@ -74,10 +74,47 @@
   background: transparent;
 }
 
-/* Tu control de Leaflet layers */
+/* Panel de overlays */
 .leaflet-control-layers {
+  min-width: 240px;
+  padding: 8px 10px 10px;
+  background: var(--legend-bg);
+  color: var(--legend-text);
+  border: 1px solid var(--legend-border);
   border-radius: 12px;
-  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.leaflet-control-layers-list {
+  margin: 0;
+}
+
+.leaflet-control-layers-base {
+  display: none;
+}
+
+.leaflet-control-layers-separator {
+  display: none;
+}
+
+.leaflet-control-layers-overlays label {
+  margin: 0;
+  padding: 6px 4px;
+  border-radius: 8px;
+}
+
+.leaflet-control-layers-overlays label:hover {
+  background: color-mix(in srgb, var(--legend-bg) 80%, var(--legend-border));
+}
+
+.leaflet-control-layers-selector {
+  accent-color: var(--color--primary);
+}
+
+.leaflet-control-layers-overlays span {
+  color: var(--legend-text);
+  font-size: 12.5px;
+  line-height: 1.35;
 }
 
 /* En móvil: ocultar el panel */
@@ -124,22 +161,32 @@
 
 /* Tu botón */
 .map-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--legend-bg);
   color: var(--legend-text);
   border: 1px solid var(--legend-border);
-  border-radius: 10px;
-  padding: 8px 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  border-radius: 12px;
+  min-height: 38px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.15s, background 0.15s;
+  transition: transform 0.16s ease, opacity 0.16s ease, background 0.16s ease, border-color 0.16s ease;
 }
 .map-btn:hover {
-  opacity: 0.85;
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--legend-border) 45%, var(--color--primary));
+  opacity: 0.96;
 }
 .map-btn.capas-ocultas {
-  opacity: 0.6;
-  background: var(--legend-border);
+  opacity: 0.74;
+  background: color-mix(in srgb, var(--legend-bg) 78%, var(--legend-border));
 }
 
 /* Responsive: más pequeño en móvil */

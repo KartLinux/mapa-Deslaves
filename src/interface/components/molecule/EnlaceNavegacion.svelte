@@ -1,41 +1,44 @@
-<!-- src/interface/componentes/moleculas/EnlaceNavegacion.svelte -->
 <script lang="ts">
   export let href: string;
   export let texto: string;
-
-  // ruta actual (simple)
-  export let rutaActual: string = "/";
+  export let rutaActual = "/";
   export let coincideConSubrutas = true;
 
-  $: activo =
-    coincideConSubrutas
-      ? (rutaActual === href || rutaActual.startsWith(href + "/"))
-      : (rutaActual === href);
+  $: activo = coincideConSubrutas
+    ? rutaActual === href || rutaActual.startsWith(`${href}/`)
+    : rutaActual === href;
 </script>
 
 <a href={href} class:active={activo}>
-  {texto}
+  <span>{texto}</span>
 </a>
 
 <style>
   a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--color--text-muted);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    transition: all 0.2s ease;
-    color: var(--color--text);
-    font-weight: 400;
-    padding: 6px 10px;
-    border-radius: 8px;
   }
 
   a:hover {
-    color: var(--color--primary);
-    filter: drop-shadow(0px 0px 3px var(--color--primary));
+    color: var(--color--text);
+    border-color: rgba(var(--color--primary-rgb), 0.14);
     background: rgba(var(--color--primary-rgb), 0.08);
   }
 
   a.active {
-    font-weight: 800;
-    background: rgba(var(--color--primary-rgb), 0.14);
     color: var(--color--primary);
+    border-color: rgba(var(--color--primary-rgb), 0.18);
+    background: rgba(var(--color--primary-rgb), 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 </style>

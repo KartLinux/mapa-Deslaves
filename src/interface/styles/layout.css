@@ -1,8 +1,13 @@
 /* src/interface/styles/layout.css */
 
 /* Contenedor general centrado */
+:root {
+  --layout-max-width: 1180px;
+  --layout-gutter: 24px;
+}
+
 .contenedor {
-  width: min(1100px, calc(100% - 32px));
+  width: min(var(--layout-max-width), calc(100% - (var(--layout-gutter) * 2)));
   margin: 0 auto;
 }
 
@@ -38,6 +43,10 @@
 }
 
 @media (max-width: 700px) {
+  :root {
+    --layout-gutter: 16px;
+  }
+
   .seccion {
     padding: 18px 0;
   }
